@@ -1,5 +1,7 @@
 package ru.stepanovgzh.mycoin.model;
 
+import sun.security.provider.DSAPublicKeyImpl;
+
 import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.Signature;
@@ -7,6 +9,10 @@ import java.security.SignatureException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
 public class Transaction implements Serializable
 {
     private byte[] from;
@@ -52,5 +58,12 @@ public class Transaction implements Serializable
         signing.update(sr.getBytes());
         this.signature = signing.sign();
         this.signatureFX = encoder.encodeToString(this.signature);
+    }
+
+    public Boolean isVerified(Signature signing) throws InvalidKeyException, SignatureException
+    {
+        signing.initVerify(new DSAPublicKeyImpl(this.getFrom()));
+        signing.update(this.toString().getBytes());
+        return signing.verify(this.signature);
     }
 }
