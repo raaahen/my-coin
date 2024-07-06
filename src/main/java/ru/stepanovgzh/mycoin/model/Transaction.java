@@ -7,12 +7,14 @@ import java.security.InvalidKeyException;
 import java.security.Signature;
 import java.security.SignatureException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Base64;
 
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
+@ToString(of = {"from", "to", "value", "timeStamp", "ledgerId"})
 public class Transaction implements Serializable
 {
     private byte[] from;
@@ -65,5 +67,20 @@ public class Transaction implements Serializable
         signing.initVerify(new DSAPublicKeyImpl(this.getFrom()));
         signing.update(this.toString().getBytes());
         return signing.verify(this.signature);
+    }
+
+    @Override
+    public boolean equals(Object o) 
+    {
+        if (this == o) return true;
+        if (!(o instanceof Transaction)) return false;
+        Transaction that = (Transaction) o;
+        return Arrays.equals(getSignature(), that.getSignature());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Arrays.hashCode(getSignature());
     }
 }
