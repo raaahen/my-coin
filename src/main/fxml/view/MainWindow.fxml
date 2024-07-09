@@ -12,29 +12,29 @@
 <?import javafx.scene.layout.BorderPane?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java.ru.stepanovgzh.mycoin.controller.MainWindowConroller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Menu">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-              <MenuItem mnemonicParsing="false" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#toNewTransactionController" text="Make Transaction" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
    <center>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn prefWidth="599.0" text="Current Block Transactions">
                <columns>
-                <TableColumn prefWidth="75.0" text="From" />
-                  <TableColumn prefWidth="75.0" text="To" />
-                  <TableColumn prefWidth="75.0" text="Value" />
-                  <TableColumn prefWidth="75.0" text="Signature" />
-                  <TableColumn prefWidth="75.0" text="Created On" />
+                <TableColumn fx:id="from" prefWidth="75.0" text="From" />
+                  <TableColumn fx:id="to" prefWidth="75.0" text="To" />
+                  <TableColumn fx:id="value" prefWidth="75.0" text="Value" />
+                  <TableColumn fx:id="signature" prefWidth="75.0" text="Signature" />
+                  <TableColumn fx:id="timeStamp" prefWidth="75.0" text="Created On" />
                </columns>
             </TableColumn>
         </columns>
@@ -49,14 +49,14 @@
             <AnchorPane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="20.0" layoutY="6.0" text="Your Balance:" />
-                  <TextField layoutX="20.0" layoutY="30.0" prefHeight="40.0" prefWidth="160.0" />
+                  <TextField fx:id="myCoins" layoutX="20.0" layoutY="30.0" prefHeight="40.0" prefWidth="160.0" />
                </children>
             </AnchorPane>
          </left>
          <center>
             <AnchorPane prefHeight="100.0" prefWidth="220.0" BorderPane.alignment="CENTER">
                <children>
-                  <TextField layoutX="18.0" layoutY="30.0" prefHeight="40.0" prefWidth="240.0" />
+                  <TextField fx:id="publicKey" layoutX="18.0" layoutY="30.0" prefHeight="40.0" prefWidth="240.0" />
                   <Label layoutX="18.0" layoutY="6.0" text="Your Address / Public Key:" />
                </children>
             </AnchorPane>
@@ -64,7 +64,7 @@
          <right>
             <AnchorPane prefHeight="100.0" prefWidth="124.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="17.0" layoutY="25.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="90.0" text="Refresh" />
+                  <Button layoutX="17.0" layoutY="25.0" mnemonicParsing="false" onAction="#refresh" prefHeight="50.0" prefWidth="90.0" text="Refresh" />
                </children>
             </AnchorPane>
          </right>
