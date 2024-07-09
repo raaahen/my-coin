@@ -144,7 +144,7 @@ public class BlockchainData
             else 
             {
                 Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\spiro\\IdeaProjects\\e-coin\\db\\blockchain.db");
+                    ("jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
 
                 PreparedStatement pstmt;
                 pstmt = connection.prepareStatement("INSERT INTO TRANSACTIONS" 
@@ -173,7 +173,7 @@ public class BlockchainData
         try 
         {
             Connection connection = DriverManager.getConnection
-                ("jdbc:sqlite:C:\\Users\\spiro\\IdeaProjects\\e-coin\\db\\blockchain.db");
+                ("jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
             Statement stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery(" SELECT * FROM BLOCKCHAIN ");
             while (resultSet.next())
@@ -216,7 +216,7 @@ public class BlockchainData
         try
         {
             Connection connection = DriverManager.getConnection
-                ("jdbc:sqlite:C:\\Users\\spiro\\IdeaProjects\\e-coin\\db\\blockchain.db");
+                ("jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
             PreparedStatement stmt = connection.prepareStatement
                 (" SELECT  * FROM TRANSACTIONS WHERE LEDGER_ID = ?");
             stmt.setInt(1, ledgerID);
@@ -283,7 +283,7 @@ public class BlockchainData
         try 
         {
             Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\spiro\\IdeaProjects\\e-coin\\db\\blockchain.db");
+                    ("jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
             PreparedStatement pstmt;
             pstmt = connection.prepareStatement
                 (" INSERT INTO BLOCKCHAIN(PREVIOUS_HASH, CURRENT_HASH, LEDGER_ID, CREATED_ON, " 
@@ -311,7 +311,7 @@ public class BlockchainData
         try 
         {
             Connection connection = DriverManager.getConnection
-                    ("jdbc:sqlite:C:\\Users\\spiro\\IdeaProjects\\e-coin\\db\\blockchain.db");
+                    ("jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
             Statement clearDBStatement = connection.createStatement();
             clearDBStatement.executeUpdate(" DELETE FROM BLOCKCHAIN ");
             clearDBStatement.executeUpdate(" DELETE FROM TRANSACTIONS ");

@@ -49,7 +49,7 @@ public class MyCoin extends Application
             //This creates your wallet if there is none and gives you a KeyPair.
             //We will create it in separate db for better security and ease of portability
             Connection walletConnection = DriverManager.getConnection(
-                "/Users/sgzh1/projects/my-coin/src/main/sql/wallet.db");
+                "jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/wallet.db");
             Statement walletStatement = walletConnection.createStatement();
             walletStatement.executeUpdate("CREATE TABLE IF NOT EXISTS WALLET ( "
                 + " PRIVATE_KEY BLOB NOT NULL UNIQUE, " 
@@ -73,7 +73,7 @@ public class MyCoin extends Application
             WalletData.getInstance().loadWallet();
             //This will create the db tables with columns for the Blockchain
             Connection blockchainConnection = DriverManager.getConnection(
-                "/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
+                "jdbc:sqlite:/Users/sgzh1/projects/my-coin/src/main/sql/blockchain.db");
             Statement blockchainStmt = blockchainConnection.createStatement();
             blockchainStmt.executeUpdate(" CREATE TABLE IF NOT EXISTS BLOCKCHAIN ( "
                 + " ID INTEGER NOT NULL UNIQUE, "
