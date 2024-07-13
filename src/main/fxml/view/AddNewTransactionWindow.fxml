@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+    <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="247.0" prefWidth="480.0">
+         <children>
+            <Button layoutX="342.0" layoutY="92.0" mnemonicParsing="false" prefHeight="107.0" prefWidth="110.0" text="Send &#10;Transaction" textAlignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <TextField layoutX="14.0" layoutY="166.0" prefHeight="30.0" prefWidth="300.0" />
+            <TextField layoutX="14.0" layoutY="94.0" prefHeight="30.0" prefWidth="300.0" />
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="187.0" text="Add New Transaction">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="141.0" prefHeight="19.0" prefWidth="57.0" text="Amount">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="68.0" prefHeight="19.0" prefWidth="82.0" text="To Address">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+    </content>
+    <expandableContent>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
+    </expandableContent>
+</DialogPane>
