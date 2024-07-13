@@ -77,6 +77,7 @@ public class MainWindowController
         }
     }
 
+    @FXML
     public void refresh()
     {
         tableView.setItems(BlockchainData.getInstance().getTransactionLedgerFX());
