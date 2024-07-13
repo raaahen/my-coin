@@ -1,14 +1,30 @@
 package ru.stepanovgzh.mycoin.threads;
 
-public class PeerServer {
+import java.io.IOException;
+import java.net.ServerSocket;
 
-    public PeerServer(int i) {
-        //TODO Auto-generated constructor stub
+public class PeerServer extends Thread
+{
+    private ServerSocket serverSocket;
+
+    public PeerServer(Integer socketPort) throws IOException
+    {
+        this.serverSocket = new ServerSocket(socketPort);
     }
 
-    public void start() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'start'");
+    @Override
+    public void run()
+    {
+        while (true)
+        {
+            try
+            {
+                new PeerRequestThread(serverSocket.accept()).start();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
-
 }
