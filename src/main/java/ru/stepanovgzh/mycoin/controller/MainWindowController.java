@@ -26,7 +26,7 @@ public class MainWindowController
     @FXML
     private BorderPane borderPane;
     @FXML
-    private TextField eCoins;
+    private TextField myCoins;
     @FXML
     private TextArea publicKey;
     
