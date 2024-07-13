@@ -26,8 +26,8 @@ public class BlockchainData
     private Block latestBlock;
     @Getter @Setter private boolean isExit = false;
     @Getter @Setter private int miningPoints;
-    @Getter private static final int TIMEOUT_INTERVAL = 65;
-    @Getter private static final int MINING_INTERVAL = 60;
+    private static final int TIMEOUT_INTERVAL = 65;
+    private static final int MINING_INTERVAL = 60;
     //helper class.
     private Signature signing = Signature.getInstance("SHA256withDSA");
 
@@ -532,5 +532,15 @@ public class BlockchainData
         }
 
         return null;
+    }
+
+    public int getTimeoutInterval()
+    {
+        return TIMEOUT_INTERVAL;
+    }
+
+    public int getMiningInterval()
+    {
+        return MINING_INTERVAL;
     }
 }
