@@ -534,12 +534,12 @@ public class BlockchainData
         return null;
     }
 
-    public int getTimeoutInterval()
+    public static int getTimeoutInterval()
     {
         return TIMEOUT_INTERVAL;
     }
 
-    public int getMiningInterval()
+    public static int getMiningInterval()
     {
         return MINING_INTERVAL;
     }
