@@ -1,8 +1,8 @@
 package ru.stepanovgzh.mycoin.model;
 
-import java.security.InvalidKeyException;
-import java.security.Signature;
-import java.security.SignatureException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import sun.security.provider.DSAPublicKeyImpl;
 
 @Getter
 @Setter
@@ -45,9 +44,13 @@ public class Block
         prevHash = new byte[]{0};
     }
 
-    public Boolean isVerified(Signature signing) throws InvalidKeyException, SignatureException
+    public Boolean isVerified(Signature signing) throws InvalidKeyException, SignatureException,
+        NoSuchAlgorithmException, InvalidKeySpecException
     {
-        signing.initVerify(new DSAPublicKeyImpl(this.minedBy));
+        KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(this.minedBy);
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+        signing.initVerify(publicKey);
         signing.update(this.toString().getBytes());
         return signing.verify(this.currHash);
     }

@@ -1,11 +1,9 @@
 package ru.stepanovgzh.mycoin.model;
 
-import sun.security.provider.DSAPublicKeyImpl;
-
 import java.io.Serializable;
-import java.security.InvalidKeyException;
-import java.security.Signature;
-import java.security.SignatureException;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Base64;
@@ -28,7 +26,7 @@ public class Transaction implements Serializable
     private Integer ledgerId;
 
     //Constructor for loading with existing signature
-    public Transaction(byte[] from, byte[] to, Integer value, 
+    public Transaction(byte[] from, byte[] to, Integer value,
         byte[] signature, Integer ledgerId, String timeStamp)
     {
         Base64.Encoder encoder = Base64.getEncoder();
@@ -44,7 +42,7 @@ public class Transaction implements Serializable
     }
 
     //Constructor for creating a new transaction and signing it
-    public Transaction (Wallet fromWallet, byte[] toAddress, Integer value, 
+    public Transaction (Wallet fromWallet, byte[] toAddress, Integer value,
         Integer ledgerId, Signature signing) throws InvalidKeyException, SignatureException
     {
         Base64.Encoder encoder = Base64.getEncoder();
@@ -62,15 +60,19 @@ public class Transaction implements Serializable
         this.signatureFX = encoder.encodeToString(this.signature);
     }
 
-    public Boolean isVerified(Signature signing) throws InvalidKeyException, SignatureException
+    public Boolean isVerified(Signature signing) throws InvalidKeyException, SignatureException,
+        NoSuchAlgorithmException, InvalidKeySpecException
     {
-        signing.initVerify(new DSAPublicKeyImpl(this.getFrom()));
+        KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(this.getFrom());
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+        signing.initVerify(publicKey);
         signing.update(this.toString().getBytes());
         return signing.verify(this.signature);
     }
 
     @Override
-    public boolean equals(Object o) 
+    public boolean equals(Object o)
     {
         if (this == o) return true;
         if (!(o instanceof Transaction)) return false;

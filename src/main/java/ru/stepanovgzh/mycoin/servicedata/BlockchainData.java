@@ -7,9 +7,10 @@ import lombok.Setter;
 import ru.stepanovgzh.mycoin.model.Block;
 import ru.stepanovgzh.mycoin.model.Transaction;
 import ru.stepanovgzh.mycoin.model.Wallet;
-import sun.security.provider.DSAPublicKeyImpl;
 
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -32,6 +33,7 @@ public class BlockchainData
     private Signature signing = Signature.getInstance("SHA256withDSA");
 
     //singleton class
+    @Getter
     private static BlockchainData instance;
 
     static 
@@ -52,12 +54,7 @@ public class BlockchainData
         newBlockTransactionsFX = FXCollections.observableArrayList();
     }
 
-    public static BlockchainData getInstance() 
-    {
-        return instance;
-    }
-
-    Comparator<Transaction> transactionComparator 
+    Comparator<Transaction> transactionComparator
         = Comparator.comparing(Transaction::getTimeStamp);
     public ObservableList<Transaction> getTransactionLedgerFX() 
     {
@@ -134,9 +131,10 @@ public class BlockchainData
     {
         try 
         {
-            if (getBalance(currentBlockChain, newBlockTransactions,
-                    new DSAPublicKeyImpl(transaction.getFrom())) < transaction.getValue() 
-                && !blockReward)
+            if (getBalance(
+                    currentBlockChain, newBlockTransactions,
+                    generatePublicKey(transaction.getFrom()))
+                < transaction.getValue() && !blockReward)
             {
                 throw new GeneralSecurityException(
                     "Not enough funds by sender to record transaction");
@@ -166,6 +164,14 @@ public class BlockchainData
             System.out.println("Problem with DB: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private PublicKey generatePublicKey(byte[] publicKeyBytes)
+        throws NoSuchAlgorithmException, InvalidKeySpecException
+    {
+        KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(publicKeyBytes);
+        return keyFactory.generatePublic(spec);
     }
 
     public void loadBlockChain() 
